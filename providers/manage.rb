@@ -17,19 +17,26 @@
 # limitations under the License.
 #
 
-def whyrun_supported?
-  true
-end
-
 action :create do
-  ssl_item = Chef::EncryptedDataBagItem.load(new_resource.data_bag, new_resource.search_id)
+  if Chef::Config[:solo]
+    Chef::Log.warn("This recipe uses search. Chef Solo does not support search.")
+  else
+  
+    chef_name = new_resource.cn.sub('*', 'wildcard').gsub('.', '_')
 
-  cert_directory_resource "certs"
-  cert_directory_resource "private", :private => true
-
-  cert_file_resource "certs/#{new_resource.cert_file}",  ssl_item['cert']
-  cert_file_resource "certs/#{new_resource.chain_file}", ssl_item['chain']
-  cert_file_resource "private/#{new_resource.key_file}", ssl_item['key'], :private => true
+    #ssl_item = Chef::EncryptedDataBagItem.load(new_resource.data_bag, chef_name)
+    ssl_item = data_bag_item(new_resource.data_bag, chef_name)
+    
+    cert_directory_resource "certs"
+    cert_directory_resource "private", :private => true
+    
+    cert_file_resource "certs/#{new_resource.cn}.pem",  ssl_item['cert']
+    cert_file_resource "private/#{new_resource.cn}.key", ssl_item['key'], :private => true
+    
+    if not ssl_item['chain']
+      cert_file_resource "certs/#{new_resource.cn}-bundle.crt", ssl_item['chain']
+    end
+  end
 end
 
 def cert_directory_resource(dir, options = {})

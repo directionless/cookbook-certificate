@@ -23,27 +23,21 @@ def initialize(*args)
 end
 
 actions :create
-
 # :data_bag is the Data Bag to search.
-# :search_id is the Data Bag object you wish to search.
+# :cn is the Data Bag object you wish to search.
+attribute :cn, :kind_of => String, :name_attribute => true 
 attribute :data_bag, :kind_of => String, :default => "certificates"
-attribute :search_id, :kind_of => String, :name_attribute => true 
 
-# :cert_file is the filename for the managed certificate.
-# :key_file is the filename for the managed key.
-# :chain_file is the filename for the managed CA chain.
+
 # :cert_path is the top-level directory for certs/keys (certs and private sub-folders are where the files will be placed)
 case node['platform']
 when "redhat","centos","scientific","amazon","fedora"
-attribute :cert_path, :kind_of => String, :default => "/etc/pki/tls"
+  attribute :cert_path, :kind_of => String, :default => "/etc/pki/tls"
 when "debian","ubuntu"
-attribute :cert_path, :kind_of => String, :default => "/etc/ssl"
+  attribute :cert_path, :kind_of => String, :default => "/etc/ssl"
 else
-attribute :cert_path, :kind_of => String, :default => "/etc/ssl"
+  attribute :cert_path, :kind_of => String, :default => "/etc/ssl"
 end
-attribute :cert_file, :kind_of => String, :default => "#{node['fqdn']}.pem"
-attribute :key_file, :kind_of => String, :default => "#{node['fqdn']}.key"
-attribute :chain_file, :kind_of => String, :default => "#{node['hostname']}-bundle.crt"
 
 # The owner and group of the managed certificate and key
 attribute :owner, :kind_of => String, :default => "root"
