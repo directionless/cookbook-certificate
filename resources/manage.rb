@@ -25,7 +25,7 @@ end
 actions :create
 # :data_bag is the Data Bag to search.
 # :cn is the Data Bag object you wish to search.
-attribute :cn, :kind_of => String, :name_attribute => true 
+attribute :cn,       :kind_of => String, :name_attribute => true 
 attribute :data_bag, :kind_of => String, :default => "certificates"
 
 
