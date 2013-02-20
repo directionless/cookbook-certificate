@@ -1,4 +1,6 @@
-# Certificate [![Build Status](https://secure.travis-ci.org/atomic-penguin/cookbook-certificate.png?branch=master)](http://travis-ci.org/atomic-penguin/cookbook-certificate)
+## Why Fork
+
+This is a fork to remove the encrypted requirement.
 
 ## Description
 

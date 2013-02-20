@@ -1,7 +1,8 @@
-maintainer       "Eric G. Wolfe"
-maintainer_email "wolfe21@marshall.edu"
+name             "certificate"
+maintainer       "seph"
+maintainer_email "seph@directionless.org"
 license          "Apache 2.0"
-description      "Installs/Configures certificates, private keys, CA root bundles from encrypted data bags."
+description      "Installs/Configures certificates, private keys, CA root bundles from data bags."
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.1.0"
 %w( amazon centos debian fedora redhat scientific ubuntu ).each do |os|
