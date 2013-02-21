@@ -34,7 +34,7 @@ action :create do
     cert_file_resource "private/#{new_resource.cn}.key", ssl_item['key'], :private => true
     
     if not ssl_item['chain'].nil?
-      cert_file_resource "certs/#{new_resource.cn}-bundle.crt", ssl_item['chain']
+      cert_file_resource "certs/#{new_resource.cn}-bundle.pem", ssl_item['chain']
     end
   end
 end
